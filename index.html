@@ -18,7 +18,7 @@
         .loading-text{font-size:16px;color:#666;font-weight:600}
         .header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);padding:40px 20px 30px;text-align:center;position:relative;overflow:hidden}
         .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,rgba(255,230,0,.05) 0%,transparent 70%)}
-        .header-logo{width:60px;height:auto;margin-bottom:15px;border-radius:8px;position:relative;z-index:1}
+        .header-logo{width:80px;height:auto;margin-bottom:15px;border-radius:12px;position:relative;z-index:1}
         .titulo-flow{font-family:'Bungee Shade',cursive;font-size:4rem;color:#FFE600;text-shadow:0 0 7px #FFE600,0 0 10px #FFE600,0 0 21px #FFE600,0 0 42px #FFC107,0 0 82px #FFC107,0 0 92px #FFC107;animation:neonPulse 2s ease-in-out infinite alternate;position:relative;z-index:1;letter-spacing:8px}
         @keyframes neonPulse{from{text-shadow:0 0 7px #FFE600,0 0 10px #FFE600,0 0 21px #FFE600,0 0 42px #FFC107,0 0 82px #FFC107}to{text-shadow:0 0 4px #FFE600,0 0 7px #FFE600,0 0 15px #FFE600,0 0 30px #FFC107,0 0 50px #FFC107}}
         .subtitulo{font-size:1.1rem;color:rgba(255,255,255,.8);margin-top:10px;font-weight:400;position:relative;z-index:1}
@@ -33,14 +33,14 @@
         .secao-titulo{font-size:1.6rem;font-weight:800;color:#1a1a2e;position:relative;display:inline-block;margin-bottom:8px}
         .secao-titulo::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:4px;background:#FFE600;border-radius:2px}
         .secao-descricao{font-size:.95rem;color:#666;margin-top:10px}
-        .divisor-logo{text-align:center;padding:15px 0;opacity:.3}
-        .divisor-logo img{width:30px;height:auto;border-radius:4px}
+        .divisor-logo{text-align:center;padding:20px 0;opacity:.15}
+        .divisor-logo svg{width:35px;height:35px}
         .campo-busca{width:100%;padding:12px 18px;border:2px solid #e0e0e0;border-radius:25px;font-size:.95rem;font-family:'Nunito',sans-serif;outline:none;transition:border-color .3s ease;margin-bottom:20px}
         .campo-busca:focus{border-color:#FFE600;box-shadow:0 0 0 3px rgba(255,230,0,.2)}
         .campo-busca::placeholder{color:#aaa}
-        .grupo-secao{margin-bottom:25px}
-        .grupo-titulo{font-size:1.1rem;font-weight:700;color:#3483FA;margin-bottom:12px;padding-left:10px;border-left:4px solid #3483FA}
-        .sub-grupo-titulo{font-size:.9rem;font-weight:700;color:#666;margin:12px 0 8px;text-transform:uppercase;letter-spacing:1px}
+        .grupo-secao{margin-bottom:30px}
+        .grupo-titulo{font-size:1rem;font-weight:700;color:#fff;margin-bottom:15px;padding:12px 18px;border-radius:10px;background:linear-gradient(135deg,#3483FA 0%,#5b9bf5 100%);box-shadow:0 2px 8px rgba(52,131,250,.2)}
+        .sub-grupo-titulo{font-size:.85rem;font-weight:700;color:#555;margin:15px 0 8px;text-transform:uppercase;letter-spacing:1px;padding:8px 14px;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border-radius:8px;border-left:4px solid #FFE600}
         .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:15px}
         .card-link{text-decoration:none;color:inherit;display:block;background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:16px;transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative;overflow:hidden}
         .card-link::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#FFE600;transform:scaleY(0);transition:transform .3s ease}
@@ -77,7 +77,7 @@
         .em-breve-icone{font-size:3rem;margin-bottom:15px}
         .em-breve-texto{font-size:1.1rem;font-weight:600}
         .footer{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);padding:30px 20px;text-align:center;color:rgba(255,255,255,.7)}
-        .footer-logo{width:40px;height:auto;border-radius:6px;margin-bottom:10px;opacity:.8}
+        .footer-logo{width:50px;height:auto;border-radius:8px;margin-bottom:10px;opacity:.8}
         .footer-texto{font-size:.85rem;margin-top:8px}
         .footer-atualizado{font-size:.75rem;margin-top:12px;color:rgba(255,255,255,.4)}
         .btn-topo{position:fixed;bottom:25px;right:25px;width:50px;height:50px;background:#FFE600;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 15px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:all .3s ease;z-index:999}
@@ -87,14 +87,14 @@
         .erro-container{text-align:center;padding:40px 20px;color:#e74c3c}
         .btn-tentar-novamente{margin-top:15px;padding:10px 25px;background:#FFE600;border:none;border-radius:20px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s ease}
         .btn-tentar-novamente:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15)}
-        @media(max-width:768px){.pagina{max-width:100%;box-shadow:none}.titulo-flow{font-size:2.5rem;letter-spacing:4px}.header{padding:30px 15px 25px}.secao{padding:30px 18px}.secao-titulo{font-size:1.3rem}.cards-grid{grid-template-columns:1fr}.nav-bar{padding:10px 15px}.nav-link{font-size:.8rem;padding:6px 12px}.btn-topo{bottom:15px;right:15px;width:44px;height:44px}}
+        @media(max-width:768px){.pagina{max-width:100%;box-shadow:none}.titulo-flow{font-size:2.5rem;letter-spacing:4px}.header{padding:30px 15px 25px}.header-logo{width:60px}.secao{padding:30px 18px}.secao-titulo{font-size:1.3rem}.cards-grid{grid-template-columns:1fr}.nav-bar{padding:10px 15px}.nav-link{font-size:.8rem;padding:6px 12px}.btn-topo{bottom:15px;right:15px;width:44px;height:44px}}
         @media(max-width:480px){.titulo-flow{font-size:2rem}}
     </style>
 </head>
 <body>
     <div class="pagina">
         <header class="header" id="topo">
-            <img id="header-logo" class="header-logo" src="https://logopng.com.br/logo/mercado-livre-88" alt="Logo Mercado Livre">
+            <img id="header-logo" class="header-logo" src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_plus@2x.png" alt="Logo Mercado Livre">
             <h1 class="titulo-flow" id="titulo-principal">FLOW</h1>
             <p class="subtitulo" id="subtitulo-principal">Seu guia da area</p>
         </header>
@@ -106,7 +106,7 @@
             </div>
         </main>
         <footer class="footer">
-            <img id="footer-logo" class="footer-logo" src="https://logopng.com.br/logo/mercado-livre-88" alt="Logo ML">
+            <img id="footer-logo" class="footer-logo" src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_plus@2x.png" alt="Logo ML">
             <p class="footer-texto">Feito com 💛 pela equipe Flow</p>
             <p class="footer-texto">© Flow 2025</p>
             <p class="footer-atualizado" id="ultima-atualizacao"></p>
@@ -117,20 +117,18 @@
         var API_URL='https://script.google.com/a/macros/mercadolivre.com/s/AKfycbz_X1sxhjMfBR_CRSyN7MSs3l6b_RZThBAF7WEzx4C7-eyeig4Vjyc-b4L_yGOfO9Lz/exec';
         var INTERVALO_ATUALIZACAO=10*60*1000;
         var ICONES_SUBSECAO={'DMO':'📊','Cockipit':'🎛️','WMS':'🏭','CAP5':'📋','Hora x Hora':'⏰','ABS':'👥','PMI':'📥','default':'🔗'};
+        var LOGO_ML='https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_plus@2x.png';
 
         function buscarDadosJSONP(){
             return new Promise(function(resolve,reject){
                 var callbackName='flowCB_'+Date.now();
                 var timeout=setTimeout(function(){delete window[callbackName];reject(new Error('Timeout'))},30000);
                 window[callbackName]=function(dados){
-                    clearTimeout(timeout);
-                    delete window[callbackName];
-                    var el=document.getElementById('jsonp-s');
-                    if(el)el.remove();
+                    clearTimeout(timeout);delete window[callbackName];
+                    var el=document.getElementById('jsonp-s');if(el)el.remove();
                     resolve(dados);
                 };
-                var s=document.createElement('script');
-                s.id='jsonp-s';
+                var s=document.createElement('script');s.id='jsonp-s';
                 s.src=API_URL+'?aba=todas&callback='+callbackName;
                 s.onerror=function(){clearTimeout(timeout);delete window[callbackName];s.remove();reject(new Error('Erro ao conectar'))};
                 document.head.appendChild(s);
@@ -142,7 +140,7 @@
             config.forEach(function(item){var k=Object.keys(item);if(k.length>=2){m[item[k[0]]]=item[k[1]]}});
             if(m.titulo){document.getElementById('titulo-principal').textContent=m.titulo.toUpperCase();document.title=m.titulo+' - Guia da Área'}
             if(m.subtitulo){document.getElementById('subtitulo-principal').textContent=m.subtitulo}
-            if(m.logo_url){document.getElementById('header-logo').src=m.logo_url;document.getElementById('footer-logo').src=m.logo_url}
+            if(m.logo_url){LOGO_ML=m.logo_url;document.getElementById('header-logo').src=m.logo_url;document.getElementById('footer-logo').src=m.logo_url}
         }
 
         function renderizarNavegacao(secoes){
@@ -157,11 +155,11 @@
             Object.keys(grupos).forEach(function(g){
                 html+='<div class="grupo-secao" data-grupo="'+g+'"><h3 class="grupo-titulo">'+getEmojiSecao(g)+' '+g+'</h3>';
                 Object.keys(grupos[g]).forEach(function(sub){
-                    html+='<p class="sub-grupo-titulo">'+sub+'</p><div class="cards-grid">';
+                    html+='<p class="sub-grupo-titulo">'+ICONES_SUBSECAO[sub]||'🔗';
+                    html+=' '+sub+'</p><div class="cards-grid">';
                     grupos[g][sub].forEach(function(item){
                         var ic=ICONES_SUBSECAO[item.sub_secao]||ICONES_SUBSECAO['default'];
-                        var dom=extrairDominio(item.url);
-                        var tit=item.titulo||'Sem título';
+                        var dom=extrairDominio(item.url);var tit=item.titulo||'Sem título';
                         html+='<a href="'+item.url+'" target="_blank" rel="noopener" class="card-link" data-titulo="'+tit.toLowerCase()+'" data-subsecao="'+(item.sub_secao||'').toLowerCase()+'"><div class="card-icone">'+ic+'</div><div class="card-titulo">'+tit+'</div><div class="card-site">'+dom+'</div>'+renderizarBadgesCAD(tit)+'</a>';
                     });
                     html+='</div>';
@@ -176,14 +174,29 @@
 
         function renderizarGlossario(dados){
             var grupos={};
-            dados.forEach(function(item){var v=item['Visão']||item['Visao']||'Geral';if(!grupos[v])grupos[v]=[];grupos[v].push(item)});
+            dados.forEach(function(item){
+                // Tenta todos os nomes possíveis que o Sheets pode enviar
+                var visao=item['Visão']||item['Visao']||item['visao']||item['visão']||'Geral';
+                if(!grupos[visao])grupos[visao]=[];
+                grupos[visao].push(item);
+            });
             var html='<input type="text" class="campo-busca" id="busca-glossario" placeholder="🔍 Buscar termo no glossário..." oninput="filtrarGlossario(this.value)"><div id="glossario-container">';
             Object.keys(grupos).forEach(function(visao){
                 html+='<div class="grupo-visao" data-visao="'+visao+'"><div class="grupo-visao-titulo">'+visao+'</div>';
                 grupos[visao].forEach(function(item){
-                    var nom=item['Nomenclatura']||item['nomenclatura']||'';
-                    var con=item['Conceito Detalhado']||item['conceito_detalhado']||'';
-                    html+='<div class="acordeao-item" data-termo="'+(nom+' '+con).toLowerCase()+'"><div class="acordeao-header" onclick="toggleAcordeao(this)"><span class="acordeao-titulo">'+nom+'</span><span class="acordeao-seta">▼</span></div><div class="acordeao-conteudo"><p class="acordeao-texto">'+con+'</p></div></div>';
+                    // Debug: pega todas as chaves do item e tenta encontrar os campos
+                    var keys=Object.keys(item);
+                    var nom='';var con='';
+                    keys.forEach(function(k){
+                        var kl=k.toLowerCase();
+                        if(kl.indexOf('nomenclatura')>-1||kl.indexOf('nomen')>-1)nom=item[k];
+                        if(kl.indexOf('conceito')>-1||kl.indexOf('detalhado')>-1)con=item[k];
+                    });
+                    // Fallback: se não encontrou, usa a 3a e 4a coluna
+                    if(!nom&&keys.length>=3)nom=item[keys[2]]||'';
+                    if(!con&&keys.length>=4)con=item[keys[3]]||'';
+
+                    html+='<div class="acordeao-item" data-termo="'+(nom+' '+con).toLowerCase().replace(/"/g,'&quot;')+'"><div class="acordeao-header" onclick="toggleAcordeao(this)"><span class="acordeao-titulo">'+nom+'</span><span class="acordeao-seta">▼</span></div><div class="acordeao-conteudo"><p class="acordeao-texto">'+con+'</p></div></div>';
                 });
                 html+='</div>';
             });
@@ -198,7 +211,11 @@
             Object.keys(grupos).forEach(function(sec){
                 html+='<div class="faq-grupo"><p class="faq-grupo-titulo">'+sec+'</p>';
                 grupos[sec].forEach(function(item){
-                    var d=item.duvida||'';var r=item['Resposta']||item['resposta']||'';
+                    var keys=Object.keys(item);
+                    var d=item.duvida||item['dúvida']||'';
+                    var r=item['Resposta']||item['resposta']||'';
+                    if(!d&&keys.length>=3)d=item[keys[2]]||'';
+                    if(!r&&keys.length>=4)r=item[keys[3]]||'';
                     html+='<div class="faq-item"><div class="faq-pergunta" onclick="toggleFAQ(this)"><span class="faq-pergunta-texto">❓ '+d+'</span><span class="acordeao-seta">▼</span></div><div class="faq-resposta"><p class="faq-resposta-texto">'+r+'</p></div></div>';
                 });
                 html+='</div>';
@@ -259,11 +276,22 @@
             });
         }
 
+        function getDivisorSVG(){
+            return '<div class="divisor-logo"><svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><circle cx="25" cy="25" r="20" fill="#FFE600" opacity="0.6"/><text x="25" y="32" text-anchor="middle" font-size="20" fill="#333">🤝</text></svg></div>';
+        }
+
         async function carregarPagina(){
             var conteudo=document.getElementById('conteudo-principal');
             conteudo.innerHTML='<div class="loading-container"><div class="spinner"></div><p class="loading-text">Carregando dados...</p></div>';
             try{
                 var dados=await buscarDadosJSONP();
+
+                // Debug: mostra as chaves do primeiro item do glossário no console
+                if(dados.glossario&&dados.glossario.length>0){
+                    console.log('GLOSSARIO - Chaves do 1o item:', Object.keys(dados.glossario[0]));
+                    console.log('GLOSSARIO - 1o item completo:', JSON.stringify(dados.glossario[0]));
+                }
+
                 aplicarConfig(dados.config);
                 renderizarNavegacao(dados.secoes);
                 var html='';
@@ -276,7 +304,7 @@
                     else if(titulo==='Contatos')html+=renderizarContatos();
                     else html+='<p style="color:#999;">Em construção...</p>';
                     html+='</section>';
-                    if(parseInt(ordem)<dados.secoes.length)html+='<div class="divisor-logo"><img src="https://logopng.com.br/logo/mercado-livre-88" alt="ML" style="width:25px;border-radius:4px;"></div>';
+                    if(parseInt(ordem)<dados.secoes.length)html+=getDivisorSVG();
                 });
                 conteudo.innerHTML=html;
                 iniciarObservador();configurarNavAtiva();

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flow - Guia da Área</title>
 
-    <!-- FONTES DO GOOGLE - Bungee Shade para o título neon, Nunito para o corpo -->
+    <!-- FONTES DO GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #FFE600; /* Amarelo Mercado Livre */
+            background-color: #FFE600;
             color: #333333;
             min-height: 100vh;
             line-height: 1.6;
@@ -77,7 +77,7 @@
         }
 
         /* ============================================
-           HEADER - Topo com efeito neon
+           HEADER
            ============================================ */
         .header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
@@ -257,7 +257,7 @@
         }
 
         /* ============================================
-           CAMPO DE BUSCA/FILTRO
+           CAMPO DE BUSCA
            ============================================ */
         .campo-busca {
             width: 100%;
@@ -368,7 +368,6 @@
             text-overflow: ellipsis;
         }
 
-        /* Badges de CAD */
         .card-badges {
             display: flex;
             gap: 4px;
@@ -624,7 +623,7 @@
         }
 
         /* ============================================
-           ERRO AO CARREGAR
+           ERRO
            ============================================ */
         .erro-container {
             text-align: center;
@@ -661,7 +660,7 @@
         }
 
         /* ============================================
-           RESPONSIVO - CELULAR
+           RESPONSIVO
            ============================================ */
         @media (max-width: 768px) {
             .pagina {
@@ -711,45 +710,24 @@
             .titulo-flow {
                 font-size: 2rem;
             }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* ============================================
-           ANIMAÇÃO DE ENTRADA
-           ============================================ */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- CONTEÚDO PRINCIPAL - "Folha de sulfite" -->
     <div class="pagina">
 
-        <!-- ============ HEADER ============ -->
+        <!-- HEADER -->
         <header class="header" id="topo">
-            <img id="header-logo" class="header-logo" src="https://logospng.org/wp-content/uploads/mercado-livre.jpg" alt="Logo Mercado Livre">
+            <img id="header-logo" class="header-logo" src="https://logopng.com.br/logo/mercado-livre-88" alt="Logo Mercado Livre">
             <h1 class="titulo-flow" id="titulo-principal">FLOW</h1>
-            <p class="subtitulo" id="subtitulo-principal">Seu guia da área</p>
+            <p class="subtitulo" id="subtitulo-principal">Seu guia da area</p>
         </header>
 
-        <!-- ============ NAVEGAÇÃO ============ -->
-        <nav class="nav-bar" id="nav-bar">
-            <!-- Preenchido via JavaScript -->
-        </nav>
+        <!-- NAVEGAÇÃO -->
+        <nav class="nav-bar" id="nav-bar"></nav>
 
-        <!-- ============ CONTEÚDO DINÂMICO ============ -->
+        <!-- CONTEÚDO -->
         <main id="conteudo-principal">
             <div class="loading-container">
                 <div class="spinner"></div>
@@ -757,9 +735,9 @@
             </div>
         </main>
 
-        <!-- ============ FOOTER ============ -->
+        <!-- FOOTER -->
         <footer class="footer">
-            <img id="footer-logo" class="footer-logo" src="https://logospng.org/wp-content/uploads/mercado-livre.jpg" alt="Logo ML">
+            <img id="footer-logo" class="footer-logo" src="https://logopng.com.br/logo/mercado-livre-88" alt="Logo ML">
             <p class="footer-texto">Feito com 💛 pela equipe Flow</p>
             <p class="footer-texto">© Flow 2025</p>
             <p class="footer-atualizado" id="ultima-atualizacao"></p>
@@ -774,22 +752,13 @@
         // CONFIGURAÇÕES
         // ============================================
 
-        // ID da planilha Google Sheets
-        const SPREADSHEET_ID = '1NfdoinNACoI7L027dpg4tLlyI_tan1aE-OopseZ0Pa0';
-
-        // GIDs de cada aba
-        const GIDS = {
-            config: 0,
-            secoes: 1186284209,
-            telas_de_trabalho: 1178264139,
-            glossario: 1099567531,
-            duvidas_frequentes: 277696325
-        };
+        // URL da Web App do Google Apps Script (sua API)
+        const API_URL = 'https://script.google.com/a/macros/mercadolivre.com/s/AKfycbz_X1sxhjMfBR_CRSyN7MSs3l6b_RZThBAF7WEzx4C7-eyeig4Vjyc-b4L_yGOfO9Lz/exec';
 
         // Tempo de atualização automática (10 minutos)
         const INTERVALO_ATUALIZACAO = 10 * 60 * 1000;
 
-        // Ícones para cada sub_secao (telas de trabalho)
+        // Ícones para cada sub_secao
         const ICONES_SUBSECAO = {
             'DMO': '📊',
             'Cockipit': '🎛️',
@@ -797,82 +766,75 @@
             'CAP5': '📋',
             'Hora x Hora': '⏰',
             'ABS': '👥',
+            'PMI': '📥',
             'default': '🔗'
         };
 
         // ============================================
-        // FUNÇÃO PARA BUSCAR DADOS DO GOOGLE SHEETS
+        // BUSCAR DADOS VIA JSONP (contorna CORS)
         // ============================================
 
         /**
-         * Busca dados de uma aba do Google Sheets
-         * Usa o endpoint gviz/tq que retorna dados em formato JSON
-         * Como a planilha é restrita ao Meli, funciona para quem está logado
+         * Busca dados do Apps Script usando JSONP
+         * JSONP funciona injetando uma tag <script> na página
+         * Isso contorna o bloqueio de CORS do navegador
          */
-        async function buscarAba(nomeAba, gid) {
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${gid}`;
+        function buscarDadosJSONP() {
+            return new Promise(function(resolve, reject) {
+                // Nome único para o callback (evita conflito)
+                var callbackName = 'flowCallback_' + Date.now();
 
-            try {
-                const resposta = await fetch(url, { credentials: 'include' });
-                const texto = await resposta.text();
+                // Timeout de 30 segundos
+                var timeout = setTimeout(function() {
+                    delete window[callbackName];
+                    reject(new Error('Timeout - dados demoraram muito para carregar'));
+                }, 30000);
 
-                // O Google retorna algo como: google.visualization.Query.setResponse({...})
-                // Precisamos extrair apenas o JSON de dentro
-                const jsonTexto = texto.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/);
+                // Cria a função de callback global
+                window[callbackName] = function(dados) {
+                    clearTimeout(timeout);
+                    delete window[callbackName];
+                    // Remove o script da página
+                    var scriptEl = document.getElementById('jsonp-script');
+                    if (scriptEl) scriptEl.remove();
+                    resolve(dados);
+                };
 
-                if (!jsonTexto || !jsonTexto[1]) {
-                    throw new Error(`Não foi possível parsear dados da aba: ${nomeAba}`);
-                }
+                // Cria e injeta o script
+                var script = document.createElement('script');
+                script.id = 'jsonp-script';
+                script.src = API_URL + '?aba=todas&callback=' + callbackName;
 
-                const dados = JSON.parse(jsonTexto[1]);
-                return processarDadosGviz(dados);
+                // Tratamento de erro (se o script não carregar)
+                script.onerror = function() {
+                    clearTimeout(timeout);
+                    delete window[callbackName];
+                    script.remove();
+                    reject(new Error('Erro ao conectar com a API'));
+                };
 
-            } catch (erro) {
-                console.error(`Erro ao buscar aba "${nomeAba}":`, erro);
-                throw erro;
-            }
-        }
-
-        /**
-         * Processa os dados do formato gviz para um array de objetos
-         * Transforma as colunas em chaves e as linhas em valores
-         */
-        function processarDadosGviz(dados) {
-            const colunas = dados.table.cols.map(col => col.label || '');
-            const linhas = dados.table.rows;
-
-            return linhas.map(linha => {
-                const objeto = {};
-                linha.c.forEach((celula, indice) => {
-                    const chave = colunas[indice];
-                    if (chave) {
-                        objeto[chave] = celula ? (celula.v !== null ? celula.v : '') : '';
-                    }
-                });
-                return objeto;
-            }).filter(obj => Object.values(obj).some(v => v !== '')); // Remove linhas vazias
+                document.head.appendChild(script);
+            });
         }
 
         // ============================================
         // FUNÇÕES DE RENDERIZAÇÃO
         // ============================================
 
-        /**
-         * Aplica configurações da aba "config" (título, subtítulo, logo)
-         */
         function aplicarConfig(config) {
-            const configMap = {};
-            config.forEach(item => {
-                // A primeira coluna é a chave, a segunda é o valor
-                const chaves = Object.keys(item);
+            var configMap = {};
+            config.forEach(function(item) {
+                var chaves = Object.keys(item);
                 if (chaves.length >= 2) {
-                    configMap[item[chaves[0]]] = item[chaves[1]];
+                    var chave = item[chaves[0]];
+                    var valor = item[chaves[1]];
+                    configMap[chave] = valor;
                 }
             });
 
             if (configMap.titulo) {
                 document.getElementById('titulo-principal').textContent = configMap.titulo.toUpperCase();
-                document.title = `${configMap.titulo} - Guia da Área`;
+                document.title = configMap.titulo + ' - Guia da Área';
             }
             if (configMap.subtitulo) {
                 document.getElementById('subtitulo-principal').textContent = configMap.subtitulo;
@@ -883,244 +845,188 @@
             }
         }
 
-        /**
-         * Renderiza a navegação com base nas seções
-         */
         function renderizarNavegacao(secoes) {
-            const nav = document.getElementById('nav-bar');
+            var nav = document.getElementById('nav-bar');
             nav.innerHTML = '';
-
-            secoes.forEach(secao => {
-                const link = document.createElement('a');
+            secoes.forEach(function(secao) {
+                var link = document.createElement('a');
                 link.className = 'nav-link';
-                link.href = `#secao-${secao.ordem}`;
+                link.href = '#secao-' + secao.ordem;
                 link.textContent = secao.titulo_secao;
                 nav.appendChild(link);
             });
         }
 
-        /**
-         * Renderiza a seção "Telas de Trabalho" com cards agrupados
-         */
         function renderizarTelasDeTrabalho(dados) {
-            // Agrupa por "secao" (Outbound, Inbound, etc.)
-            const grupos = {};
-            dados.forEach(item => {
-                const secao = item.secao || 'Outros';
+            var grupos = {};
+            dados.forEach(function(item) {
+                var secao = item.secao || 'Outros';
                 if (!grupos[secao]) grupos[secao] = {};
-
-                const subSecao = item.sub_secao || 'Geral';
+                var subSecao = item.sub_secao || 'Geral';
                 if (!grupos[secao][subSecao]) grupos[secao][subSecao] = [];
-
                 grupos[secao][subSecao].push(item);
             });
 
-            let html = '';
-            html += `<input type="text" class="campo-busca" id="busca-telas" placeholder="🔍 Buscar tela, sistema ou link..." oninput="filtrarTelas(this.value)">`;
-
+            var html = '';
+            html += '<input type="text" class="campo-busca" id="busca-telas" placeholder="🔍 Buscar tela, sistema ou link..." oninput="filtrarTelas(this.value)">';
             html += '<div id="telas-container">';
 
-            Object.keys(grupos).forEach(nomeGrupo => {
-                html += `<div class="grupo-secao" data-grupo="${nomeGrupo}">`;
-                html += `<h3 class="grupo-titulo">${getEmojiSecao(nomeGrupo)} ${nomeGrupo}</h3>`;
+            Object.keys(grupos).forEach(function(nomeGrupo) {
+                html += '<div class="grupo-secao" data-grupo="' + nomeGrupo + '">';
+                html += '<h3 class="grupo-titulo">' + getEmojiSecao(nomeGrupo) + ' ' + nomeGrupo + '</h3>';
 
-                Object.keys(grupos[nomeGrupo]).forEach(subGrupo => {
-                    html += `<p class="sub-grupo-titulo">${subGrupo}</p>`;
-                    html += `<div class="cards-grid">`;
+                Object.keys(grupos[nomeGrupo]).forEach(function(subGrupo) {
+                    html += '<p class="sub-grupo-titulo">' + subGrupo + '</p>';
+                    html += '<div class="cards-grid">';
 
-                    grupos[nomeGrupo][subGrupo].forEach(item => {
-                        const icone = ICONES_SUBSECAO[item.sub_secao] || ICONES_SUBSECAO['default'];
-                        const dominio = extrairDominio(item.url);
-                        const titulo = item.titulo || 'Sem título';
+                    grupos[nomeGrupo][subGrupo].forEach(function(item) {
+                        var icone = ICONES_SUBSECAO[item.sub_secao] || ICONES_SUBSECAO['default'];
+                        var dominio = extrairDominio(item.url);
+                        var titulo = item.titulo || 'Sem título';
+                        var badges = renderizarBadgesCAD(titulo);
 
-                        html += `
-                            <a href="${item.url}" target="_blank" rel="noopener" class="card-link" data-titulo="${titulo.toLowerCase()}" data-subsecao="${(item.sub_secao || '').toLowerCase()}">
-                                <div class="card-icone">${icone}</div>
-                                <div class="card-titulo">${titulo}</div>
-                                <div class="card-site">${dominio}</div>
-                                ${renderizarBadgesCAD(titulo)}
-                            </a>
-                        `;
+                        html += '<a href="' + item.url + '" target="_blank" rel="noopener" class="card-link" data-titulo="' + titulo.toLowerCase() + '" data-subsecao="' + (item.sub_secao || '').toLowerCase() + '">';
+                        html += '<div class="card-icone">' + icone + '</div>';
+                        html += '<div class="card-titulo">' + titulo + '</div>';
+                        html += '<div class="card-site">' + dominio + '</div>';
+                        html += badges;
+                        html += '</a>';
                     });
 
-                    html += `</div>`;
+                    html += '</div>';
                 });
 
-                html += `</div>`;
+                html += '</div>';
             });
 
             html += '</div>';
             html += '<p class="sem-resultados" id="sem-resultados-telas">Nenhuma tela encontrada 😕</p>';
-
             return html;
         }
 
-        /**
-         * Renderiza badges de CAD quando o título menciona BRSP
-         */
         function renderizarBadgesCAD(titulo) {
-            const cads = titulo.match(/BRSP\d+/g);
+            var cads = titulo.match(/BRSP\d+/g);
             if (!cads) return '';
-
-            let badges = '<div class="card-badges">';
-            cads.forEach(cad => {
-                badges += `<span class="badge">${cad}</span>`;
+            var badges = '<div class="card-badges">';
+            cads.forEach(function(cad) {
+                badges += '<span class="badge">' + cad + '</span>';
             });
             badges += '</div>';
             return badges;
         }
 
-        /**
-         * Renderiza a seção "Glossário" em formato acordeão
-         */
         function renderizarGlossario(dados) {
-            // Agrupa por "Visão"
-            const grupos = {};
-            dados.forEach(item => {
-                const visao = item['Visão'] || item['Visao'] || 'Geral';
+            var grupos = {};
+            dados.forEach(function(item) {
+                var visao = item['Visão'] || item['Visao'] || 'Geral';
                 if (!grupos[visao]) grupos[visao] = [];
                 grupos[visao].push(item);
             });
 
-            let html = '';
-            html += `<input type="text" class="campo-busca" id="busca-glossario" placeholder="🔍 Buscar termo no glossário..." oninput="filtrarGlossario(this.value)">`;
-
+            var html = '';
+            html += '<input type="text" class="campo-busca" id="busca-glossario" placeholder="🔍 Buscar termo no glossário..." oninput="filtrarGlossario(this.value)">';
             html += '<div id="glossario-container">';
 
-            Object.keys(grupos).forEach(visao => {
-                html += `<div class="grupo-visao" data-visao="${visao}">`;
-                html += `<div class="grupo-visao-titulo">${visao}</div>`;
+            Object.keys(grupos).forEach(function(visao) {
+                html += '<div class="grupo-visao" data-visao="' + visao + '">';
+                html += '<div class="grupo-visao-titulo">' + visao + '</div>';
 
-                grupos[visao].forEach(item => {
-                    const nomenclatura = item['Nomenclatura'] || item['nomenclatura'] || '';
-                    const conceito = item['Conceito Detalhado'] || item['conceito_detalhado'] || '';
+                grupos[visao].forEach(function(item) {
+                    var nomenclatura = item['Nomenclatura'] || item['nomenclatura'] || '';
+                    var conceito = item['Conceito Detalhado'] || item['conceito_detalhado'] || '';
 
-                    html += `
-                        <div class="acordeao-item" data-termo="${nomenclatura.toLowerCase()} ${conceito.toLowerCase()}">
-                            <div class="acordeao-header" onclick="toggleAcordeao(this)">
-                                <span class="acordeao-titulo">${nomenclatura}</span>
-                                <span class="acordeao-seta">▼</span>
-                            </div>
-                            <div class="acordeao-conteudo">
-                                <p class="acordeao-texto">${conceito}</p>
-                            </div>
-                        </div>
-                    `;
+                    html += '<div class="acordeao-item" data-termo="' + (nomenclatura + ' ' + conceito).toLowerCase() + '">';
+                    html += '<div class="acordeao-header" onclick="toggleAcordeao(this)">';
+                    html += '<span class="acordeao-titulo">' + nomenclatura + '</span>';
+                    html += '<span class="acordeao-seta">▼</span>';
+                    html += '</div>';
+                    html += '<div class="acordeao-conteudo">';
+                    html += '<p class="acordeao-texto">' + conceito + '</p>';
+                    html += '</div>';
+                    html += '</div>';
                 });
 
-                html += `</div>`;
+                html += '</div>';
             });
 
             html += '</div>';
             html += '<p class="sem-resultados" id="sem-resultados-glossario">Nenhum termo encontrado 😕</p>';
-
             return html;
         }
 
-        /**
-         * Renderiza a seção "Dúvidas Frequentes" em formato FAQ
-         */
         function renderizarDuvidas(dados) {
-            // Agrupa por "secao"
-            const grupos = {};
-            dados.forEach(item => {
-                const secao = item.secao || 'Geral';
+            var grupos = {};
+            dados.forEach(function(item) {
+                var secao = item.secao || 'Geral';
                 if (!grupos[secao]) grupos[secao] = [];
                 grupos[secao].push(item);
             });
 
-            let html = '<div id="faq-container">';
+            var html = '<div id="faq-container">';
 
-            Object.keys(grupos).forEach(secao => {
-                html += `<div class="faq-grupo" data-secao="${secao}">`;
-                html += `<p class="faq-grupo-titulo">${secao}</p>`;
+            Object.keys(grupos).forEach(function(secao) {
+                html += '<div class="faq-grupo" data-secao="' + secao + '">';
+                html += '<p class="faq-grupo-titulo">' + secao + '</p>';
 
-                grupos[secao].forEach(item => {
-                    const duvida = item.duvida || item['duvida'] || '';
-                    const resposta = item['Resposta'] || item['resposta'] || '';
+                grupos[secao].forEach(function(item) {
+                    var duvida = item.duvida || '';
+                    var resposta = item['Resposta'] || item['resposta'] || '';
 
-                    html += `
-                        <div class="faq-item">
-                            <div class="faq-pergunta" onclick="toggleFAQ(this)">
-                                <span class="faq-pergunta-texto">❓ ${duvida}</span>
-                                <span class="acordeao-seta">▼</span>
-                            </div>
-                            <div class="faq-resposta">
-                                <p class="faq-resposta-texto">${resposta}</p>
-                            </div>
-                        </div>
-                    `;
+                    html += '<div class="faq-item">';
+                    html += '<div class="faq-pergunta" onclick="toggleFAQ(this)">';
+                    html += '<span class="faq-pergunta-texto">❓ ' + duvida + '</span>';
+                    html += '<span class="acordeao-seta">▼</span>';
+                    html += '</div>';
+                    html += '<div class="faq-resposta">';
+                    html += '<p class="faq-resposta-texto">' + resposta + '</p>';
+                    html += '</div>';
+                    html += '</div>';
                 });
 
-                html += `</div>`;
+                html += '</div>';
             });
 
             html += '</div>';
-
             return html;
         }
 
-        /**
-         * Renderiza a seção "Contatos" (em breve)
-         */
         function renderizarContatos() {
-            return `
-                <div class="em-breve">
-                    <div class="em-breve-icone">🚧</div>
-                    <p class="em-breve-texto">Em breve!</p>
-                    <p style="color: #aaa; margin-top: 8px; font-size: 0.9rem;">Estamos preparando essa seção</p>
-                </div>
-            `;
+            return '<div class="em-breve"><div class="em-breve-icone">🚧</div><p class="em-breve-texto">Em breve!</p><p style="color:#aaa;margin-top:8px;font-size:0.9rem;">Estamos preparando essa seção</p></div>';
         }
 
         // ============================================
         // FUNÇÕES AUXILIARES
         // ============================================
 
-        /** Extrai o domínio de uma URL */
         function extrairDominio(url) {
-            try {
-                return new URL(url).hostname.replace('www.', '');
-            } catch {
-                return '';
-            }
+            try { return new URL(url).hostname.replace('www.', ''); }
+            catch(e) { return ''; }
         }
 
-        /** Retorna emoji baseado no nome da seção */
         function getEmojiSecao(secao) {
-            const map = {
-                'Outbound': '📦',
-                'Inbound': '📥',
-                'Outbound / Inbound': '🔄'
-            };
+            var map = { 'Outbound': '📦', 'Inbound': '📥', 'Outbound / Inbound': '🔄' };
             return map[secao] || '📌';
         }
 
-        /** Toggle do acordeão (glossário) */
         function toggleAcordeao(elemento) {
-            const conteudo = elemento.nextElementSibling;
-            const estaAberto = elemento.classList.contains('aberto');
-
-            // Fecha todos os outros do mesmo grupo
-            const grupo = elemento.closest('.grupo-visao');
+            var conteudo = elemento.nextElementSibling;
+            var estaAberto = elemento.classList.contains('aberto');
+            var grupo = elemento.closest('.grupo-visao');
             if (grupo) {
-                grupo.querySelectorAll('.acordeao-header.aberto').forEach(header => {
-                    header.classList.remove('aberto');
-                    header.nextElementSibling.classList.remove('aberto');
+                grupo.querySelectorAll('.acordeao-header.aberto').forEach(function(h) {
+                    h.classList.remove('aberto');
+                    h.nextElementSibling.classList.remove('aberto');
                 });
             }
-
             if (!estaAberto) {
                 elemento.classList.add('aberto');
                 conteudo.classList.add('aberto');
             }
         }
 
-        /** Toggle do FAQ */
         function toggleFAQ(elemento) {
-            const resposta = elemento.nextElementSibling;
-            const estaAberto = elemento.classList.contains('aberto');
-
+            var resposta = elemento.nextElementSibling;
+            var estaAberto = elemento.classList.contains('aberto');
             if (estaAberto) {
                 elemento.classList.remove('aberto');
                 resposta.classList.remove('aberto');
@@ -1130,26 +1036,24 @@
             }
         }
 
-        /** Filtro de busca para Telas de Trabalho */
         function filtrarTelas(texto) {
-            const container = document.getElementById('telas-container');
-            const cards = container.querySelectorAll('.card-link');
-            const semResultados = document.getElementById('sem-resultados-telas');
-            const termoLower = texto.toLowerCase().trim();
-            let encontrou = false;
+            var container = document.getElementById('telas-container');
+            var cards = container.querySelectorAll('.card-link');
+            var semResultados = document.getElementById('sem-resultados-telas');
+            var termoLower = texto.toLowerCase().trim();
+            var encontrou = false;
 
-            // Se o campo está vazio, mostra tudo
             if (!termoLower) {
-                cards.forEach(card => card.style.display = '');
-                container.querySelectorAll('.grupo-secao, .sub-grupo-titulo').forEach(el => el.style.display = '');
+                cards.forEach(function(card) { card.style.display = ''; });
+                container.querySelectorAll('.grupo-secao, .sub-grupo-titulo').forEach(function(el) { el.style.display = ''; });
                 semResultados.style.display = 'none';
                 return;
             }
 
-            cards.forEach(card => {
-                const titulo = card.getAttribute('data-titulo') || '';
-                const subsecao = card.getAttribute('data-subsecao') || '';
-                const visivel = titulo.includes(termoLower) || subsecao.includes(termoLower);
+            cards.forEach(function(card) {
+                var titulo = card.getAttribute('data-titulo') || '';
+                var subsecao = card.getAttribute('data-subsecao') || '';
+                var visivel = titulo.includes(termoLower) || subsecao.includes(termoLower);
                 card.style.display = visivel ? '' : 'none';
                 if (visivel) encontrou = true;
             });
@@ -1157,24 +1061,23 @@
             semResultados.style.display = encontrou ? 'none' : 'block';
         }
 
-        /** Filtro de busca para Glossário */
         function filtrarGlossario(texto) {
-            const container = document.getElementById('glossario-container');
-            const itens = container.querySelectorAll('.acordeao-item');
-            const semResultados = document.getElementById('sem-resultados-glossario');
-            const termoLower = texto.toLowerCase().trim();
-            let encontrou = false;
+            var container = document.getElementById('glossario-container');
+            var itens = container.querySelectorAll('.acordeao-item');
+            var semResultados = document.getElementById('sem-resultados-glossario');
+            var termoLower = texto.toLowerCase().trim();
+            var encontrou = false;
 
             if (!termoLower) {
-                itens.forEach(item => item.style.display = '');
-                container.querySelectorAll('.grupo-visao').forEach(g => g.style.display = '');
+                itens.forEach(function(item) { item.style.display = ''; });
+                container.querySelectorAll('.grupo-visao').forEach(function(g) { g.style.display = ''; });
                 semResultados.style.display = 'none';
                 return;
             }
 
-            itens.forEach(item => {
-                const termo = item.getAttribute('data-termo') || '';
-                const visivel = termo.includes(termoLower);
+            itens.forEach(function(item) {
+                var termo = item.getAttribute('data-termo') || '';
+                var visivel = termo.includes(termoLower);
                 item.style.display = visivel ? '' : 'none';
                 if (visivel) encontrou = true;
             });
@@ -1182,65 +1085,47 @@
             semResultados.style.display = encontrou ? 'none' : 'block';
         }
 
-        // ============================================
-        // OBSERVADOR DE VISIBILIDADE (animação de entrada)
-        // ============================================
-
         function iniciarObservador() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visivel');
                     }
                 });
             }, { threshold: 0.1 });
 
-            document.querySelectorAll('.secao').forEach(secao => {
+            document.querySelectorAll('.secao').forEach(function(secao) {
                 observer.observe(secao);
             });
         }
 
-        // ============================================
-        // BOTÃO VOLTAR AO TOPO
-        // ============================================
-
         function configurarBotaoTopo() {
-            const btn = document.getElementById('btn-topo');
-
-            window.addEventListener('scroll', () => {
+            var btn = document.getElementById('btn-topo');
+            window.addEventListener('scroll', function() {
                 if (window.scrollY > 400) {
                     btn.classList.add('visivel');
                 } else {
                     btn.classList.remove('visivel');
                 }
             });
-
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', function() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
 
-        // ============================================
-        // NAVEGAÇÃO ATIVA
-        // ============================================
-
         function configurarNavAtiva() {
-            const links = document.querySelectorAll('.nav-link');
-            const secoes = document.querySelectorAll('.secao');
-
-            window.addEventListener('scroll', () => {
-                let secaoAtual = '';
-
-                secoes.forEach(secao => {
-                    const topo = secao.offsetTop - 100;
-                    if (window.scrollY >= topo) {
+            var links = document.querySelectorAll('.nav-link');
+            var secoes = document.querySelectorAll('.secao');
+            window.addEventListener('scroll', function() {
+                var secaoAtual = '';
+                secoes.forEach(function(secao) {
+                    if (window.scrollY >= secao.offsetTop - 100) {
                         secaoAtual = secao.id;
                     }
                 });
-
-                links.forEach(link => {
+                links.forEach(function(link) {
                     link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${secaoAtual}`) {
+                    if (link.getAttribute('href') === '#' + secaoAtual) {
                         link.classList.add('active');
                     }
                 });
@@ -1248,94 +1133,71 @@
         }
 
         // ============================================
-        // FUNÇÃO PRINCIPAL - Carrega tudo
+        // FUNÇÃO PRINCIPAL
         // ============================================
 
         async function carregarPagina() {
-            const conteudo = document.getElementById('conteudo-principal');
+            var conteudo = document.getElementById('conteudo-principal');
 
             try {
-                // Busca todas as abas em paralelo (mais rápido!)
-                const [config, secoes, telas, glossario, duvidas] = await Promise.all([
-                    buscarAba('config', GIDS.config),
-                    buscarAba('secoes', GIDS.secoes),
-                    buscarAba('telas_de_trabalho', GIDS.telas_de_trabalho),
-                    buscarAba('glossario', GIDS.glossario),
-                    buscarAba('duvidas_frequentes', GIDS.duvidas_frequentes)
-                ]);
+                // Busca TODOS os dados de uma vez via JSONP
+                var dados = await buscarDadosJSONP();
 
                 // Aplica configurações
-                aplicarConfig(config);
+                aplicarConfig(dados.config);
 
                 // Renderiza navegação
-                renderizarNavegacao(secoes);
+                renderizarNavegacao(dados.secoes);
 
                 // Monta o HTML de cada seção
-                let htmlPagina = '';
+                var htmlPagina = '';
 
-                secoes.forEach(secao => {
-                    const ordem = secao.ordem;
-                    const titulo = secao.titulo_secao;
-                    const descricao = secao.descricao;
+                dados.secoes.forEach(function(secao) {
+                    var ordem = secao.ordem;
+                    var titulo = secao.titulo_secao;
+                    var descricao = secao.descricao;
 
-                    htmlPagina += `<section class="secao" id="secao-${ordem}">`;
-                    htmlPagina += `<div class="secao-header">`;
-                    htmlPagina += `<h2 class="secao-titulo">${titulo}</h2>`;
-                    htmlPagina += `<p class="secao-descricao">${descricao}</p>`;
-                    htmlPagina += `</div>`;
+                    htmlPagina += '<section class="secao" id="secao-' + ordem + '">';
+                    htmlPagina += '<div class="secao-header">';
+                    htmlPagina += '<h2 class="secao-titulo">' + titulo + '</h2>';
+                    htmlPagina += '<p class="secao-descricao">' + descricao + '</p>';
+                    htmlPagina += '</div>';
 
-                    // Renderiza conteúdo baseado na seção
                     switch (titulo) {
                         case 'Telas de trabalho':
-                            htmlPagina += renderizarTelasDeTrabalho(telas);
+                            htmlPagina += renderizarTelasDeTrabalho(dados.telas_de_trabalho);
                             break;
                         case 'Glossário':
-                            htmlPagina += renderizarGlossario(glossario);
+                            htmlPagina += renderizarGlossario(dados.glossario);
                             break;
                         case 'Dúvidas Frequentes':
-                            htmlPagina += renderizarDuvidas(duvidas);
+                            htmlPagina += renderizarDuvidas(dados.duvidas_frequentes);
                             break;
                         case 'Contatos':
                             htmlPagina += renderizarContatos();
                             break;
                         default:
-                            htmlPagina += `<p style="color:#999;">Conteúdo em construção...</p>`;
+                            htmlPagina += '<p style="color:#999;">Conteúdo em construção...</p>';
                     }
 
-                    htmlPagina += `</section>`;
+                    htmlPagina += '</section>';
 
-                    // Divisor com logo entre seções (exceto a última)
-                    if (parseInt(ordem) < secoes.length) {
-                        htmlPagina += `
-                            <div class="divisor-logo">
-                                <img src="https://logospng.org/wp-content/uploads/mercado-livre.jpg" alt="ML" style="width:25px;border-radius:4px;">
-                            </div>
-                        `;
+                    if (parseInt(ordem) < dados.secoes.length) {
+                        htmlPagina += '<div class="divisor-logo"><img src="https://logopng.com.br/logo/mercado-livre-88" alt="ML" style="width:25px;border-radius:4px;"></div>';
                     }
                 });
 
-                // Insere todo o conteúdo na página
                 conteudo.innerHTML = htmlPagina;
-
-                // Inicia animações e funcionalidades
                 iniciarObservador();
                 configurarNavAtiva();
 
-                // Atualiza timestamp
-                const agora = new Date();
+                var agora = new Date();
                 document.getElementById('ultima-atualizacao').textContent =
-                    `Última atualização: ${agora.toLocaleString('pt-BR')}`;
+                    'Última atualização: ' + agora.toLocaleString('pt-BR');
 
             } catch (erro) {
                 console.error('Erro ao carregar página:', erro);
-                conteudo.innerHTML = `
-                    <div class="erro-container">
-                        <div class="erro-icone">⚠️</div>
-                        <p class="erro-texto">Não foi possível carregar os dados.</p>
-                        <p class="erro-texto" style="font-size:0.8rem; margin-top:5px;">Verifique se você está logado na conta @mercadolibre.com</p>
-                        <button class="btn-tentar-novamente" onclick="carregarPagina()">Tentar novamente</button>
-                    </div>
-                `;
+                conteudo.innerHTML = '<div class="erro-container"><div class="erro-icone">⚠️</div><p class="erro-texto">Não foi possível carregar os dados.</p><p class="erro-texto" style="font-size:0.8rem;margin-top:5px;">Verifique se você está logado na conta @mercadolibre.com</p><button class="btn-tentar-novamente" onclick="carregarPagina()">Tentar novamente</button></div>';
             }
         }
 
@@ -1343,12 +1205,9 @@
         // INICIALIZAÇÃO
         // ============================================
 
-        // Carrega a página quando o DOM estiver pronto
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             carregarPagina();
             configurarBotaoTopo();
-
-            // Atualização automática a cada 10 minutos
             setInterval(carregarPagina, INTERVALO_ATUALIZACAO);
         });
     </script>

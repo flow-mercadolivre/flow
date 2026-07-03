@@ -4,738 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flow - Guia da Área</title>
-
-    <!-- FONTES DO GOOGLE -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-
     <style>
-        /* ============================================
-           RESET E BASE
-           ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #FFE600;
-            color: #333333;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* ============================================
-           CONTAINER PRINCIPAL - "Folha de sulfite"
-           ============================================ */
-        .pagina {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #FFFFFF;
-            min-height: 100vh;
-            box-shadow: 0 0 40px rgba(0,0,0,0.15);
-            padding: 0;
-            position: relative;
-        }
-
-        /* ============================================
-           LOADING / CARREGAMENTO
-           ============================================ */
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            gap: 20px;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f0f0f0;
-            border-top: 5px solid #FFE600;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 16px;
-            color: #666;
-            font-weight: 600;
-        }
-
-        /* ============================================
-           HEADER
-           ============================================ */
-        .header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            padding: 40px 20px 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center, rgba(255,230,0,0.05) 0%, transparent 70%);
-        }
-
-        .header-logo {
-            width: 60px;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            position: relative;
-            
-        }
-
-        .titulo-flow {
-            font-family: 'Bungee Shade', cursive;
-            font-size: 4rem;
-            color: #FFE600;
-            text-shadow:
-                0 0 7px #FFE600,
-                0 0 10px #FFE600,
-                0 0 21px #FFE600,
-                0 0 42px #FFC107,
-                0 0 82px #FFC107,
-                0 0 92px #FFC107;
-            animation: neonPulse 2s ease-in-out infinite alternate;
-            position: relative;
-            z-index: 1;
-            letter-spacing: 8px;
-        }
-
-        @keyframes neonPulse {
-            from {
-                text-shadow:
-                    0 0 7px #FFE600,
-                    0 0 10px #FFE600,
-                    0 0 21px #FFE600,
-                    0 0 42px #FFC107,
-                    0 0 82px #FFC107;
-            }
-            to {
-                text-shadow:
-                    0 0 4px #FFE600,
-                    0 0 7px #FFE600,
-                    0 0 15px #FFE600,
-                    0 0 30px #FFC107,
-                    0 0 50px #FFC107;
-            }
-        }
-
-        .subtitulo {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.8);
-            margin-top: 10px;
-            font-weight: 400;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ============================================
-           NAVEGAÇÃO FIXA
-           ============================================ */
-        .nav-bar {
-            background: #FFFFFF;
-            border-bottom: 3px solid #FFE600;
-            padding: 12px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-bar::-webkit-scrollbar {
-            height: 3px;
-        }
-
-        .nav-bar::-webkit-scrollbar-thumb {
-            background: #FFE600;
-            border-radius: 3px;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: #333;
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 8px 16px;
-            border-radius: 20px;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            background: #f5f5f5;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: #FFE600;
-            color: #1a1a2e;
-            transform: translateY(-1px);
-        }
-
-        /* ============================================
-           SEÇÕES
-           ============================================ */
-        .secao {
-            padding: 40px 25px;
-            border-bottom: 1px solid #f0f0f0;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .secao.visivel {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .secao-header {
-            margin-bottom: 25px;
-        }
-
-        .secao-titulo {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #1a1a2e;
-            position: relative;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        .secao-titulo::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #FFE600;
-            border-radius: 2px;
-        }
-
-        .secao-descricao {
-            font-size: 0.95rem;
-            color: #666;
-            margin-top: 10px;
-        }
-
-        /* ============================================
-           DIVISOR COM LOGO
-           ============================================ */
-        .divisor-logo {
-            text-align: center;
-            padding: 15px 0;
-            opacity: 0.3;
-        }
-
-        .divisor-logo img {
-            width: 30px;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        /* ============================================
-           CAMPO DE BUSCA
-           ============================================ */
-        .campo-busca {
-            width: 100%;
-            padding: 12px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 0.95rem;
-            font-family: 'Nunito', sans-serif;
-            outline: none;
-            transition: border-color 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .campo-busca:focus {
-            border-color: #FFE600;
-            box-shadow: 0 0 0 3px rgba(255,230,0,0.2);
-        }
-
-        .campo-busca::placeholder {
-            color: #aaa;
-        }
-
-        /* ============================================
-           TELAS DE TRABALHO - Cards
-           ============================================ */
-        .grupo-secao {
-            margin-bottom: 25px;
-        }
-
-        .grupo-titulo {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #3483FA;
-            margin-bottom: 12px;
-            padding-left: 10px;
-            border-left: 4px solid #3483FA;
-        }
-
-        .sub-grupo-titulo {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #666;
-            margin: 12px 0 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .card-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            background: #FFFFFF;
-            border: 1px solid #e8e8e8;
-            border-radius: 12px;
-            padding: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: #FFE600;
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .card-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border-color: #FFE600;
-        }
-
-        .card-link:hover::before {
-            transform: scaleY(1);
-        }
-
-        .card-icone {
-            font-size: 1.3rem;
-            margin-bottom: 6px;
-        }
-
-        .card-titulo {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .card-site {
-            font-size: 0.7rem;
-            color: #999;
-            margin-top: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .card-badges {
-            display: flex;
-            gap: 4px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            font-size: 0.65rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: #f0f7ff;
-            color: #3483FA;
-            font-weight: 700;
-        }
-
-        /* ============================================
-           GLOSSÁRIO - Acordeão
-           ============================================ */
-        .grupo-visao {
-            margin-bottom: 20px;
-        }
-
-        .grupo-visao-titulo {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            background: linear-gradient(135deg, #1a1a2e, #0f3460);
-            padding: 10px 16px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .acordeao-item {
-            border: 1px solid #e8e8e8;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .acordeao-item:hover {
-            border-color: #FFE600;
-        }
-
-        .acordeao-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            cursor: pointer;
-            background: #fafafa;
-            transition: background 0.3s ease;
-            user-select: none;
-        }
-
-        .acordeao-header:hover {
-            background: #fff9c4;
-        }
-
-        .acordeao-header.aberto {
-            background: #FFE600;
-            font-weight: 700;
-        }
-
-        .acordeao-titulo {
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .acordeao-seta {
-            transition: transform 0.3s ease;
-            font-size: 1.1rem;
-        }
-
-        .acordeao-header.aberto .acordeao-seta {
-            transform: rotate(180deg);
-        }
-
-        .acordeao-conteudo {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            padding: 0 18px;
-        }
-
-        .acordeao-conteudo.aberto {
-            max-height: 500px;
-            padding: 14px 18px;
-        }
-
-        .acordeao-texto {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        /* ============================================
-           DÚVIDAS FREQUENTES
-           ============================================ */
-        .faq-grupo-titulo {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #3483FA;
-            margin: 15px 0 8px;
-            padding-left: 10px;
-            border-left: 3px solid #3483FA;
-        }
-
-        .faq-item {
-            border: 1px solid #e8e8e8;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            overflow: hidden;
-            border-left: 4px solid #3483FA;
-        }
-
-        .faq-pergunta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 18px;
-            cursor: pointer;
-            background: #fafafa;
-            transition: background 0.3s ease;
-            user-select: none;
-        }
-
-        .faq-pergunta:hover {
-            background: #f0f7ff;
-        }
-
-        .faq-pergunta.aberto {
-            background: #e3f2fd;
-            font-weight: 700;
-        }
-
-        .faq-pergunta-texto {
-            font-size: 0.9rem;
-            font-weight: 600;
-            flex: 1;
-        }
-
-        .faq-resposta {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            padding: 0 18px;
-        }
-
-        .faq-resposta.aberto {
-            max-height: 500px;
-            padding: 14px 18px;
-        }
-
-        .faq-resposta-texto {
-            font-size: 0.9rem;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        /* ============================================
-           CONTATOS - Em breve
-           ============================================ */
-        .em-breve {
-            text-align: center;
-            padding: 50px 20px;
-            color: #999;
-        }
-
-        .em-breve-icone {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .em-breve-texto {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
-        .footer {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 30px 20px;
-            text-align: center;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .footer-logo {
-            width: 40px;
-            height: auto;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            opacity: 0.8;
-        }
-
-        .footer-texto {
-            font-size: 0.85rem;
-            margin-top: 8px;
-        }
-
-        .footer-atualizado {
-            font-size: 0.75rem;
-            margin-top: 12px;
-            color: rgba(255,255,255,0.4);
-        }
-
-        /* ============================================
-           BOTÃO VOLTAR AO TOPO
-           ============================================ */
-        .btn-topo {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 50px;
-            height: 50px;
-            background: #FFE600;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 999;
-        }
-
-        .btn-topo.visivel {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .btn-topo:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* ============================================
-           SEM RESULTADOS
-           ============================================ */
-        .sem-resultados {
-            text-align: center;
-            padding: 30px;
-            color: #999;
-            font-style: italic;
-            display: none;
-        }
-
-        /* ============================================
-           ERRO
-           ============================================ */
-        .erro-container {
-            text-align: center;
-            padding: 40px 20px;
-            color: #e74c3c;
-        }
-
-        .erro-container .erro-icone {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .erro-container .erro-texto {
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        .btn-tentar-novamente {
-            margin-top: 15px;
-            padding: 10px 25px;
-            background: #FFE600;
-            border: none;
-            border-radius: 20px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-tentar-novamente:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        /* ============================================
-           RESPONSIVO
-           ============================================ */
-        @media (max-width: 768px) {
-            .pagina {
-                max-width: 100%;
-                box-shadow: none;
-            }
-
-            .titulo-flow {
-                font-size: 2.5rem;
-                letter-spacing: 4px;
-            }
-
-            .header {
-                padding: 30px 15px 25px;
-            }
-
-            .secao {
-                padding: 30px 18px;
-            }
-
-            .secao-titulo {
-                font-size: 1.3rem;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-bar {
-                padding: 10px 15px;
-            }
-
-            .nav-link {
-                font-size: 0.8rem;
-                padding: 6px 12px;
-            }
-
-            .btn-topo {
-                bottom: 15px;
-                right: 15px;
-                width: 44px;
-                height: 44px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .titulo-flow {
-                font-size: 2rem;
-            }
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Nunito',sans-serif;background-color:#FFE600;color:#333;min-height:100vh;line-height:1.6}
+        .pagina{max-width:900px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.15);position:relative}
+        .loading-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:20px}
+        .spinner{width:50px;height:50px;border:5px solid #f0f0f0;border-top:5px solid #FFE600;border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading-text{font-size:16px;color:#666;font-weight:600}
+        .header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);padding:40px 20px 30px;text-align:center;position:relative;overflow:hidden}
+        .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,rgba(255,230,0,.05) 0%,transparent 70%)}
+        .header-logo{width:60px;height:auto;margin-bottom:15px;border-radius:8px;position:relative;z-index:1}
+        .titulo-flow{font-family:'Bungee Shade',cursive;font-size:4rem;color:#FFE600;text-shadow:0 0 7px #FFE600,0 0 10px #FFE600,0 0 21px #FFE600,0 0 42px #FFC107,0 0 82px #FFC107,0 0 92px #FFC107;animation:neonPulse 2s ease-in-out infinite alternate;position:relative;z-index:1;letter-spacing:8px}
+        @keyframes neonPulse{from{text-shadow:0 0 7px #FFE600,0 0 10px #FFE600,0 0 21px #FFE600,0 0 42px #FFC107,0 0 82px #FFC107}to{text-shadow:0 0 4px #FFE600,0 0 7px #FFE600,0 0 15px #FFE600,0 0 30px #FFC107,0 0 50px #FFC107}}
+        .subtitulo{font-size:1.1rem;color:rgba(255,255,255,.8);margin-top:10px;font-weight:400;position:relative;z-index:1}
+        .nav-bar{background:#fff;border-bottom:3px solid #FFE600;padding:12px 20px;position:sticky;top:0;z-index:1000;display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+        .nav-bar::-webkit-scrollbar{height:3px}
+        .nav-bar::-webkit-scrollbar-thumb{background:#FFE600;border-radius:3px}
+        .nav-link{text-decoration:none;color:#333;font-weight:700;font-size:.85rem;padding:8px 16px;border-radius:20px;white-space:nowrap;transition:all .3s ease;background:#f5f5f5}
+        .nav-link:hover,.nav-link.active{background:#FFE600;color:#1a1a2e;transform:translateY(-1px)}
+        .secao{padding:40px 25px;border-bottom:1px solid #f0f0f0;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+        .secao.visivel{opacity:1;transform:translateY(0)}
+        .secao-header{margin-bottom:25px}
+        .secao-titulo{font-size:1.6rem;font-weight:800;color:#1a1a2e;position:relative;display:inline-block;margin-bottom:8px}
+        .secao-titulo::after{content:'';position:absolute;bottom:-4px;left:0;width:100%;height:4px;background:#FFE600;border-radius:2px}
+        .secao-descricao{font-size:.95rem;color:#666;margin-top:10px}
+        .divisor-logo{text-align:center;padding:15px 0;opacity:.3}
+        .divisor-logo img{width:30px;height:auto;border-radius:4px}
+        .campo-busca{width:100%;padding:12px 18px;border:2px solid #e0e0e0;border-radius:25px;font-size:.95rem;font-family:'Nunito',sans-serif;outline:none;transition:border-color .3s ease;margin-bottom:20px}
+        .campo-busca:focus{border-color:#FFE600;box-shadow:0 0 0 3px rgba(255,230,0,.2)}
+        .campo-busca::placeholder{color:#aaa}
+        .grupo-secao{margin-bottom:25px}
+        .grupo-titulo{font-size:1.1rem;font-weight:700;color:#3483FA;margin-bottom:12px;padding-left:10px;border-left:4px solid #3483FA}
+        .sub-grupo-titulo{font-size:.9rem;font-weight:700;color:#666;margin:12px 0 8px;text-transform:uppercase;letter-spacing:1px}
+        .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:15px}
+        .card-link{text-decoration:none;color:inherit;display:block;background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:16px;transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative;overflow:hidden}
+        .card-link::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:#FFE600;transform:scaleY(0);transition:transform .3s ease}
+        .card-link:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,0,0,.1);border-color:#FFE600}
+        .card-link:hover::before{transform:scaleY(1)}
+        .card-icone{font-size:1.3rem;margin-bottom:6px}
+        .card-titulo{font-size:.9rem;font-weight:700;color:#333}
+        .card-site{font-size:.7rem;color:#999;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .card-badges{display:flex;gap:4px;margin-top:8px;flex-wrap:wrap}
+        .badge{font-size:.65rem;padding:2px 8px;border-radius:10px;background:#f0f7ff;color:#3483FA;font-weight:700}
+        .grupo-visao{margin-bottom:20px}
+        .grupo-visao-titulo{font-size:1rem;font-weight:700;color:#fff;background:linear-gradient(135deg,#1a1a2e,#0f3460);padding:10px 16px;border-radius:8px;margin-bottom:10px}
+        .acordeao-item{border:1px solid #e8e8e8;border-radius:10px;margin-bottom:8px;overflow:hidden;transition:all .3s ease}
+        .acordeao-item:hover{border-color:#FFE600}
+        .acordeao-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;cursor:pointer;background:#fafafa;transition:background .3s ease;user-select:none}
+        .acordeao-header:hover{background:#fff9c4}
+        .acordeao-header.aberto{background:#FFE600;font-weight:700}
+        .acordeao-titulo{font-size:.95rem;font-weight:600}
+        .acordeao-seta{transition:transform .3s ease;font-size:1.1rem}
+        .acordeao-header.aberto .acordeao-seta{transform:rotate(180deg)}
+        .acordeao-conteudo{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 18px}
+        .acordeao-conteudo.aberto{max-height:500px;padding:14px 18px}
+        .acordeao-texto{font-size:.9rem;color:#555;line-height:1.7}
+        .faq-grupo-titulo{font-size:.95rem;font-weight:700;color:#3483FA;margin:15px 0 8px;padding-left:10px;border-left:3px solid #3483FA}
+        .faq-item{border:1px solid #e8e8e8;border-radius:10px;margin-bottom:8px;overflow:hidden;border-left:4px solid #3483FA}
+        .faq-pergunta{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;cursor:pointer;background:#fafafa;transition:background .3s ease;user-select:none}
+        .faq-pergunta:hover{background:#f0f7ff}
+        .faq-pergunta.aberto{background:#e3f2fd;font-weight:700}
+        .faq-pergunta-texto{font-size:.9rem;font-weight:600;flex:1}
+        .faq-resposta{max-height:0;overflow:hidden;transition:max-height .4s ease;padding:0 18px}
+        .faq-resposta.aberto{max-height:500px;padding:14px 18px}
+        .faq-resposta-texto{font-size:.9rem;color:#555;line-height:1.7}
+        .em-breve{text-align:center;padding:50px 20px;color:#999}
+        .em-breve-icone{font-size:3rem;margin-bottom:15px}
+        .em-breve-texto{font-size:1.1rem;font-weight:600}
+        .footer{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);padding:30px 20px;text-align:center;color:rgba(255,255,255,.7)}
+        .footer-logo{width:40px;height:auto;border-radius:6px;margin-bottom:10px;opacity:.8}
+        .footer-texto{font-size:.85rem;margin-top:8px}
+        .footer-atualizado{font-size:.75rem;margin-top:12px;color:rgba(255,255,255,.4)}
+        .btn-topo{position:fixed;bottom:25px;right:25px;width:50px;height:50px;background:#FFE600;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 15px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:all .3s ease;z-index:999}
+        .btn-topo.visivel{opacity:1;visibility:visible}
+        .btn-topo:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(0,0,0,.3)}
+        .sem-resultados{text-align:center;padding:30px;color:#999;font-style:italic;display:none}
+        .erro-container{text-align:center;padding:40px 20px;color:#e74c3c}
+        .btn-tentar-novamente{margin-top:15px;padding:10px 25px;background:#FFE600;border:none;border-radius:20px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s ease}
+        .btn-tentar-novamente:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+        @media(max-width:768px){.pagina{max-width:100%;box-shadow:none}.titulo-flow{font-size:2.5rem;letter-spacing:4px}.header{padding:30px 15px 25px}.secao{padding:30px 18px}.secao-titulo{font-size:1.3rem}.cards-grid{grid-template-columns:1fr}.nav-bar{padding:10px 15px}.nav-link{font-size:.8rem;padding:6px 12px}.btn-topo{bottom:15px;right:15px;width:44px;height:44px}}
+        @media(max-width:480px){.titulo-flow{font-size:2rem}}
     </style>
 </head>
 <body>
-
     <div class="pagina">
-
-        <!-- HEADER -->
         <header class="header" id="topo">
             <img id="header-logo" class="header-logo" src="https://logopng.com.br/logo/mercado-livre-88" alt="Logo Mercado Livre">
             <h1 class="titulo-flow" id="titulo-principal">FLOW</h1>
             <p class="subtitulo" id="subtitulo-principal">Seu guia da area</p>
         </header>
-
-        <!-- NAVEGAÇÃO -->
         <nav class="nav-bar" id="nav-bar"></nav>
-
-        <!-- CONTEÚDO -->
         <main id="conteudo-principal">
             <div class="loading-container">
                 <div class="spinner"></div>
                 <p class="loading-text">Carregando dados...</p>
             </div>
         </main>
-
-        <!-- FOOTER -->
         <footer class="footer">
             <img id="footer-logo" class="footer-logo" src="https://logopng.com.br/logo/mercado-livre-88" alt="Logo ML">
             <p class="footer-texto">Feito com 💛 pela equipe Flow</p>
@@ -743,474 +112,182 @@
             <p class="footer-atualizado" id="ultima-atualizacao"></p>
         </footer>
     </div>
-
-    <!-- BOTÃO VOLTAR AO TOPO -->
     <button class="btn-topo" id="btn-topo" title="Voltar ao topo">⬆️</button>
-
     <script>
-        // ============================================
-        // CONFIGURAÇÕES
-        // ============================================
+        var API_URL='https://script.google.com/a/macros/mercadolivre.com/s/AKfycbz_X1sxhjMfBR_CRSyN7MSs3l6b_RZThBAF7WEzx4C7-eyeig4Vjyc-b4L_yGOfO9Lz/exec';
+        var INTERVALO_ATUALIZACAO=10*60*1000;
+        var ICONES_SUBSECAO={'DMO':'📊','Cockipit':'🎛️','WMS':'🏭','CAP5':'📋','Hora x Hora':'⏰','ABS':'👥','PMI':'📥','default':'🔗'};
 
-        // URL da Web App do Google Apps Script (sua API)
-        const API_URL = 'https://script.google.com/a/macros/mercadolivre.com/s/AKfycbz_X1sxhjMfBR_CRSyN7MSs3l6b_RZThBAF7WEzx4C7-eyeig4Vjyc-b4L_yGOfO9Lz/exec';
-
-        // Tempo de atualização automática (10 minutos)
-        const INTERVALO_ATUALIZACAO = 10 * 60 * 1000;
-
-        // Ícones para cada sub_secao
-        const ICONES_SUBSECAO = {
-            'DMO': '📊',
-            'Cockipit': '🎛️',
-            'WMS': '🏭',
-            'CAP5': '📋',
-            'Hora x Hora': '⏰',
-            'ABS': '👥',
-            'PMI': '📥',
-            'default': '🔗'
-        };
-
-        // ============================================
-        // BUSCAR DADOS VIA JSONP (contorna CORS)
-        // ============================================
-
-        /**
-         * Busca dados do Apps Script usando JSONP
-         * JSONP funciona injetando uma tag <script> na página
-         * Isso contorna o bloqueio de CORS do navegador
-         */
-        function buscarDadosJSONP() {
-            return new Promise(function(resolve, reject) {
-                // Nome único para o callback (evita conflito)
-                var callbackName = 'flowCallback_' + Date.now();
-
-                // Timeout de 30 segundos
-                var timeout = setTimeout(function() {
-                    delete window[callbackName];
-                    reject(new Error('Timeout - dados demoraram muito para carregar'));
-                }, 30000);
-
-                // Cria a função de callback global
-                window[callbackName] = function(dados) {
+        function buscarDadosJSONP(){
+            return new Promise(function(resolve,reject){
+                var callbackName='flowCB_'+Date.now();
+                var timeout=setTimeout(function(){delete window[callbackName];reject(new Error('Timeout'))},30000);
+                window[callbackName]=function(dados){
                     clearTimeout(timeout);
                     delete window[callbackName];
-                    // Remove o script da página
-                    var scriptEl = document.getElementById('jsonp-script');
-                    if (scriptEl) scriptEl.remove();
+                    var el=document.getElementById('jsonp-s');
+                    if(el)el.remove();
                     resolve(dados);
                 };
-
-                // Cria e injeta o script
-                var script = document.createElement('script');
-                script.id = 'jsonp-script';
-                script.src = API_URL + '?aba=todas&callback=' + callbackName;
-
-                // Tratamento de erro (se o script não carregar)
-                script.onerror = function() {
-                    clearTimeout(timeout);
-                    delete window[callbackName];
-                    script.remove();
-                    reject(new Error('Erro ao conectar com a API'));
-                };
-
-                document.head.appendChild(script);
+                var s=document.createElement('script');
+                s.id='jsonp-s';
+                s.src=API_URL+'?aba=todas&callback='+callbackName;
+                s.onerror=function(){clearTimeout(timeout);delete window[callbackName];s.remove();reject(new Error('Erro ao conectar'))};
+                document.head.appendChild(s);
             });
         }
 
-        // ============================================
-        // FUNÇÕES DE RENDERIZAÇÃO
-        // ============================================
-
-        function aplicarConfig(config) {
-            var configMap = {};
-            config.forEach(function(item) {
-                var chaves = Object.keys(item);
-                if (chaves.length >= 2) {
-                    var chave = item[chaves[0]];
-                    var valor = item[chaves[1]];
-                    configMap[chave] = valor;
-                }
-            });
-
-            if (configMap.titulo) {
-                document.getElementById('titulo-principal').textContent = configMap.titulo.toUpperCase();
-                document.title = configMap.titulo + ' - Guia da Área';
-            }
-            if (configMap.subtitulo) {
-                document.getElementById('subtitulo-principal').textContent = configMap.subtitulo;
-            }
-            if (configMap.logo_url) {
-                document.getElementById('header-logo').src = configMap.logo_url;
-                document.getElementById('footer-logo').src = configMap.logo_url;
-            }
+        function aplicarConfig(config){
+            var m={};
+            config.forEach(function(item){var k=Object.keys(item);if(k.length>=2){m[item[k[0]]]=item[k[1]]}});
+            if(m.titulo){document.getElementById('titulo-principal').textContent=m.titulo.toUpperCase();document.title=m.titulo+' - Guia da Área'}
+            if(m.subtitulo){document.getElementById('subtitulo-principal').textContent=m.subtitulo}
+            if(m.logo_url){document.getElementById('header-logo').src=m.logo_url;document.getElementById('footer-logo').src=m.logo_url}
         }
 
-        function renderizarNavegacao(secoes) {
-            var nav = document.getElementById('nav-bar');
-            nav.innerHTML = '';
-            secoes.forEach(function(secao) {
-                var link = document.createElement('a');
-                link.className = 'nav-link';
-                link.href = '#secao-' + secao.ordem;
-                link.textContent = secao.titulo_secao;
-                nav.appendChild(link);
-            });
+        function renderizarNavegacao(secoes){
+            var nav=document.getElementById('nav-bar');nav.innerHTML='';
+            secoes.forEach(function(s){var a=document.createElement('a');a.className='nav-link';a.href='#secao-'+s.ordem;a.textContent=s.titulo_secao;nav.appendChild(a)});
         }
 
-        function renderizarTelasDeTrabalho(dados) {
-            var grupos = {};
-            dados.forEach(function(item) {
-                var secao = item.secao || 'Outros';
-                if (!grupos[secao]) grupos[secao] = {};
-                var subSecao = item.sub_secao || 'Geral';
-                if (!grupos[secao][subSecao]) grupos[secao][subSecao] = [];
-                grupos[secao][subSecao].push(item);
-            });
-
-            var html = '';
-            html += '<input type="text" class="campo-busca" id="busca-telas" placeholder="🔍 Buscar tela, sistema ou link..." oninput="filtrarTelas(this.value)">';
-            html += '<div id="telas-container">';
-
-            Object.keys(grupos).forEach(function(nomeGrupo) {
-                html += '<div class="grupo-secao" data-grupo="' + nomeGrupo + '">';
-                html += '<h3 class="grupo-titulo">' + getEmojiSecao(nomeGrupo) + ' ' + nomeGrupo + '</h3>';
-
-                Object.keys(grupos[nomeGrupo]).forEach(function(subGrupo) {
-                    html += '<p class="sub-grupo-titulo">' + subGrupo + '</p>';
-                    html += '<div class="cards-grid">';
-
-                    grupos[nomeGrupo][subGrupo].forEach(function(item) {
-                        var icone = ICONES_SUBSECAO[item.sub_secao] || ICONES_SUBSECAO['default'];
-                        var dominio = extrairDominio(item.url);
-                        var titulo = item.titulo || 'Sem título';
-                        var badges = renderizarBadgesCAD(titulo);
-
-                        html += '<a href="' + item.url + '" target="_blank" rel="noopener" class="card-link" data-titulo="' + titulo.toLowerCase() + '" data-subsecao="' + (item.sub_secao || '').toLowerCase() + '">';
-                        html += '<div class="card-icone">' + icone + '</div>';
-                        html += '<div class="card-titulo">' + titulo + '</div>';
-                        html += '<div class="card-site">' + dominio + '</div>';
-                        html += badges;
-                        html += '</a>';
+        function renderizarTelasDeTrabalho(dados){
+            var grupos={};
+            dados.forEach(function(item){var sec=item.secao||'Outros';if(!grupos[sec])grupos[sec]={};var sub=item.sub_secao||'Geral';if(!grupos[sec][sub])grupos[sec][sub]=[];grupos[sec][sub].push(item)});
+            var html='<input type="text" class="campo-busca" id="busca-telas" placeholder="🔍 Buscar tela, sistema ou link..." oninput="filtrarTelas(this.value)"><div id="telas-container">';
+            Object.keys(grupos).forEach(function(g){
+                html+='<div class="grupo-secao" data-grupo="'+g+'"><h3 class="grupo-titulo">'+getEmojiSecao(g)+' '+g+'</h3>';
+                Object.keys(grupos[g]).forEach(function(sub){
+                    html+='<p class="sub-grupo-titulo">'+sub+'</p><div class="cards-grid">';
+                    grupos[g][sub].forEach(function(item){
+                        var ic=ICONES_SUBSECAO[item.sub_secao]||ICONES_SUBSECAO['default'];
+                        var dom=extrairDominio(item.url);
+                        var tit=item.titulo||'Sem título';
+                        html+='<a href="'+item.url+'" target="_blank" rel="noopener" class="card-link" data-titulo="'+tit.toLowerCase()+'" data-subsecao="'+(item.sub_secao||'').toLowerCase()+'"><div class="card-icone">'+ic+'</div><div class="card-titulo">'+tit+'</div><div class="card-site">'+dom+'</div>'+renderizarBadgesCAD(tit)+'</a>';
                     });
-
-                    html += '</div>';
+                    html+='</div>';
                 });
-
-                html += '</div>';
+                html+='</div>';
             });
-
-            html += '</div>';
-            html += '<p class="sem-resultados" id="sem-resultados-telas">Nenhuma tela encontrada 😕</p>';
+            html+='</div><p class="sem-resultados" id="sem-resultados-telas">Nenhuma tela encontrada 😕</p>';
             return html;
         }
 
-        function renderizarBadgesCAD(titulo) {
-            var cads = titulo.match(/BRSP\d+/g);
-            if (!cads) return '';
-            var badges = '<div class="card-badges">';
-            cads.forEach(function(cad) {
-                badges += '<span class="badge">' + cad + '</span>';
-            });
-            badges += '</div>';
-            return badges;
-        }
+        function renderizarBadgesCAD(t){var c=t.match(/BRSP\d+/g);if(!c)return '';var h='<div class="card-badges">';c.forEach(function(x){h+='<span class="badge">'+x+'</span>'});return h+'</div>'}
 
-        function renderizarGlossario(dados) {
-            var grupos = {};
-            dados.forEach(function(item) {
-                var visao = item['Visão'] || item['Visao'] || 'Geral';
-                if (!grupos[visao]) grupos[visao] = [];
-                grupos[visao].push(item);
-            });
-
-            var html = '';
-            html += '<input type="text" class="campo-busca" id="busca-glossario" placeholder="🔍 Buscar termo no glossário..." oninput="filtrarGlossario(this.value)">';
-            html += '<div id="glossario-container">';
-
-            Object.keys(grupos).forEach(function(visao) {
-                html += '<div class="grupo-visao" data-visao="' + visao + '">';
-                html += '<div class="grupo-visao-titulo">' + visao + '</div>';
-
-                grupos[visao].forEach(function(item) {
-                    var nomenclatura = item['Nomenclatura'] || item['nomenclatura'] || '';
-                    var conceito = item['Conceito Detalhado'] || item['conceito_detalhado'] || '';
-
-                    html += '<div class="acordeao-item" data-termo="' + (nomenclatura + ' ' + conceito).toLowerCase() + '">';
-                    html += '<div class="acordeao-header" onclick="toggleAcordeao(this)">';
-                    html += '<span class="acordeao-titulo">' + nomenclatura + '</span>';
-                    html += '<span class="acordeao-seta">▼</span>';
-                    html += '</div>';
-                    html += '<div class="acordeao-conteudo">';
-                    html += '<p class="acordeao-texto">' + conceito + '</p>';
-                    html += '</div>';
-                    html += '</div>';
+        function renderizarGlossario(dados){
+            var grupos={};
+            dados.forEach(function(item){var v=item['Visão']||item['Visao']||'Geral';if(!grupos[v])grupos[v]=[];grupos[v].push(item)});
+            var html='<input type="text" class="campo-busca" id="busca-glossario" placeholder="🔍 Buscar termo no glossário..." oninput="filtrarGlossario(this.value)"><div id="glossario-container">';
+            Object.keys(grupos).forEach(function(visao){
+                html+='<div class="grupo-visao" data-visao="'+visao+'"><div class="grupo-visao-titulo">'+visao+'</div>';
+                grupos[visao].forEach(function(item){
+                    var nom=item['Nomenclatura']||item['nomenclatura']||'';
+                    var con=item['Conceito Detalhado']||item['conceito_detalhado']||'';
+                    html+='<div class="acordeao-item" data-termo="'+(nom+' '+con).toLowerCase()+'"><div class="acordeao-header" onclick="toggleAcordeao(this)"><span class="acordeao-titulo">'+nom+'</span><span class="acordeao-seta">▼</span></div><div class="acordeao-conteudo"><p class="acordeao-texto">'+con+'</p></div></div>';
                 });
-
-                html += '</div>';
+                html+='</div>';
             });
-
-            html += '</div>';
-            html += '<p class="sem-resultados" id="sem-resultados-glossario">Nenhum termo encontrado 😕</p>';
+            html+='</div><p class="sem-resultados" id="sem-resultados-glossario">Nenhum termo encontrado 😕</p>';
             return html;
         }
 
-        function renderizarDuvidas(dados) {
-            var grupos = {};
-            dados.forEach(function(item) {
-                var secao = item.secao || 'Geral';
-                if (!grupos[secao]) grupos[secao] = [];
-                grupos[secao].push(item);
-            });
-
-            var html = '<div id="faq-container">';
-
-            Object.keys(grupos).forEach(function(secao) {
-                html += '<div class="faq-grupo" data-secao="' + secao + '">';
-                html += '<p class="faq-grupo-titulo">' + secao + '</p>';
-
-                grupos[secao].forEach(function(item) {
-                    var duvida = item.duvida || '';
-                    var resposta = item['Resposta'] || item['resposta'] || '';
-
-                    html += '<div class="faq-item">';
-                    html += '<div class="faq-pergunta" onclick="toggleFAQ(this)">';
-                    html += '<span class="faq-pergunta-texto">❓ ' + duvida + '</span>';
-                    html += '<span class="acordeao-seta">▼</span>';
-                    html += '</div>';
-                    html += '<div class="faq-resposta">';
-                    html += '<p class="faq-resposta-texto">' + resposta + '</p>';
-                    html += '</div>';
-                    html += '</div>';
+        function renderizarDuvidas(dados){
+            var grupos={};
+            dados.forEach(function(item){var sec=item.secao||'Geral';if(!grupos[sec])grupos[sec]=[];grupos[sec].push(item)});
+            var html='<div id="faq-container">';
+            Object.keys(grupos).forEach(function(sec){
+                html+='<div class="faq-grupo"><p class="faq-grupo-titulo">'+sec+'</p>';
+                grupos[sec].forEach(function(item){
+                    var d=item.duvida||'';var r=item['Resposta']||item['resposta']||'';
+                    html+='<div class="faq-item"><div class="faq-pergunta" onclick="toggleFAQ(this)"><span class="faq-pergunta-texto">❓ '+d+'</span><span class="acordeao-seta">▼</span></div><div class="faq-resposta"><p class="faq-resposta-texto">'+r+'</p></div></div>';
                 });
-
-                html += '</div>';
+                html+='</div>';
             });
-
-            html += '</div>';
-            return html;
+            html+='</div>';return html;
         }
 
-        function renderizarContatos() {
-            return '<div class="em-breve"><div class="em-breve-icone">🚧</div><p class="em-breve-texto">Em breve!</p><p style="color:#aaa;margin-top:8px;font-size:0.9rem;">Estamos preparando essa seção</p></div>';
+        function renderizarContatos(){return '<div class="em-breve"><div class="em-breve-icone">🚧</div><p class="em-breve-texto">Em breve!</p><p style="color:#aaa;margin-top:8px;font-size:0.9rem;">Estamos preparando essa seção</p></div>'}
+
+        function extrairDominio(url){try{return new URL(url).hostname.replace('www.','')}catch(e){return ''}}
+        function getEmojiSecao(s){var m={'Outbound':'📦','Inbound':'📥','Outbound / Inbound':'🔄'};return m[s]||'📌'}
+
+        function toggleAcordeao(el){
+            var c=el.nextElementSibling;var aberto=el.classList.contains('aberto');
+            var g=el.closest('.grupo-visao');
+            if(g){g.querySelectorAll('.acordeao-header.aberto').forEach(function(h){h.classList.remove('aberto');h.nextElementSibling.classList.remove('aberto')})}
+            if(!aberto){el.classList.add('aberto');c.classList.add('aberto')}
         }
 
-        // ============================================
-        // FUNÇÕES AUXILIARES
-        // ============================================
-
-        function extrairDominio(url) {
-            try { return new URL(url).hostname.replace('www.', ''); }
-            catch(e) { return ''; }
+        function toggleFAQ(el){
+            var r=el.nextElementSibling;
+            if(el.classList.contains('aberto')){el.classList.remove('aberto');r.classList.remove('aberto')}
+            else{el.classList.add('aberto');r.classList.add('aberto')}
         }
 
-        function getEmojiSecao(secao) {
-            var map = { 'Outbound': '📦', 'Inbound': '📥', 'Outbound / Inbound': '🔄' };
-            return map[secao] || '📌';
+        function filtrarTelas(texto){
+            var container=document.getElementById('telas-container');var cards=container.querySelectorAll('.card-link');
+            var sem=document.getElementById('sem-resultados-telas');var t=texto.toLowerCase().trim();var found=false;
+            if(!t){cards.forEach(function(c){c.style.display=''});container.querySelectorAll('.grupo-secao,.sub-grupo-titulo').forEach(function(e){e.style.display=''});sem.style.display='none';return}
+            cards.forEach(function(c){var vis=((c.getAttribute('data-titulo')||'')+(c.getAttribute('data-subsecao')||'')).includes(t);c.style.display=vis?'':'none';if(vis)found=true});
+            sem.style.display=found?'none':'block';
         }
 
-        function toggleAcordeao(elemento) {
-            var conteudo = elemento.nextElementSibling;
-            var estaAberto = elemento.classList.contains('aberto');
-            var grupo = elemento.closest('.grupo-visao');
-            if (grupo) {
-                grupo.querySelectorAll('.acordeao-header.aberto').forEach(function(h) {
-                    h.classList.remove('aberto');
-                    h.nextElementSibling.classList.remove('aberto');
-                });
-            }
-            if (!estaAberto) {
-                elemento.classList.add('aberto');
-                conteudo.classList.add('aberto');
-            }
+        function filtrarGlossario(texto){
+            var container=document.getElementById('glossario-container');var itens=container.querySelectorAll('.acordeao-item');
+            var sem=document.getElementById('sem-resultados-glossario');var t=texto.toLowerCase().trim();var found=false;
+            if(!t){itens.forEach(function(i){i.style.display=''});container.querySelectorAll('.grupo-visao').forEach(function(g){g.style.display=''});sem.style.display='none';return}
+            itens.forEach(function(i){var vis=(i.getAttribute('data-termo')||'').includes(t);i.style.display=vis?'':'none';if(vis)found=true});
+            sem.style.display=found?'none':'block';
         }
 
-        function toggleFAQ(elemento) {
-            var resposta = elemento.nextElementSibling;
-            var estaAberto = elemento.classList.contains('aberto');
-            if (estaAberto) {
-                elemento.classList.remove('aberto');
-                resposta.classList.remove('aberto');
-            } else {
-                elemento.classList.add('aberto');
-                resposta.classList.add('aberto');
-            }
+        function iniciarObservador(){
+            var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visivel')})},{threshold:0.1});
+            document.querySelectorAll('.secao').forEach(function(s){obs.observe(s)});
         }
 
-        function filtrarTelas(texto) {
-            var container = document.getElementById('telas-container');
-            var cards = container.querySelectorAll('.card-link');
-            var semResultados = document.getElementById('sem-resultados-telas');
-            var termoLower = texto.toLowerCase().trim();
-            var encontrou = false;
-
-            if (!termoLower) {
-                cards.forEach(function(card) { card.style.display = ''; });
-                container.querySelectorAll('.grupo-secao, .sub-grupo-titulo').forEach(function(el) { el.style.display = ''; });
-                semResultados.style.display = 'none';
-                return;
-            }
-
-            cards.forEach(function(card) {
-                var titulo = card.getAttribute('data-titulo') || '';
-                var subsecao = card.getAttribute('data-subsecao') || '';
-                var visivel = titulo.includes(termoLower) || subsecao.includes(termoLower);
-                card.style.display = visivel ? '' : 'none';
-                if (visivel) encontrou = true;
-            });
-
-            semResultados.style.display = encontrou ? 'none' : 'block';
+        function configurarBotaoTopo(){
+            var btn=document.getElementById('btn-topo');
+            window.addEventListener('scroll',function(){btn.classList.toggle('visivel',window.scrollY>400)});
+            btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
         }
 
-        function filtrarGlossario(texto) {
-            var container = document.getElementById('glossario-container');
-            var itens = container.querySelectorAll('.acordeao-item');
-            var semResultados = document.getElementById('sem-resultados-glossario');
-            var termoLower = texto.toLowerCase().trim();
-            var encontrou = false;
-
-            if (!termoLower) {
-                itens.forEach(function(item) { item.style.display = ''; });
-                container.querySelectorAll('.grupo-visao').forEach(function(g) { g.style.display = ''; });
-                semResultados.style.display = 'none';
-                return;
-            }
-
-            itens.forEach(function(item) {
-                var termo = item.getAttribute('data-termo') || '';
-                var visivel = termo.includes(termoLower);
-                item.style.display = visivel ? '' : 'none';
-                if (visivel) encontrou = true;
-            });
-
-            semResultados.style.display = encontrou ? 'none' : 'block';
-        }
-
-        function iniciarObservador() {
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visivel');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.secao').forEach(function(secao) {
-                observer.observe(secao);
+        function configurarNavAtiva(){
+            var links=document.querySelectorAll('.nav-link');var secoes=document.querySelectorAll('.secao');
+            window.addEventListener('scroll',function(){
+                var atual='';secoes.forEach(function(s){if(window.scrollY>=s.offsetTop-100)atual=s.id});
+                links.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+atual)});
             });
         }
 
-        function configurarBotaoTopo() {
-            var btn = document.getElementById('btn-topo');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 400) {
-                    btn.classList.add('visivel');
-                } else {
-                    btn.classList.remove('visivel');
-                }
-            });
-            btn.addEventListener('click', function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-
-        function configurarNavAtiva() {
-            var links = document.querySelectorAll('.nav-link');
-            var secoes = document.querySelectorAll('.secao');
-            window.addEventListener('scroll', function() {
-                var secaoAtual = '';
-                secoes.forEach(function(secao) {
-                    if (window.scrollY >= secao.offsetTop - 100) {
-                        secaoAtual = secao.id;
-                    }
-                });
-                links.forEach(function(link) {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === '#' + secaoAtual) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-        }
-
-        // ============================================
-        // FUNÇÃO PRINCIPAL
-        // ============================================
-
-        async function carregarPagina() {
-            var conteudo = document.getElementById('conteudo-principal');
-
-            try {
-                // Busca TODOS os dados de uma vez via JSONP
-                var dados = await buscarDadosJSONP();
-
-                // Aplica configurações
+        async function carregarPagina(){
+            var conteudo=document.getElementById('conteudo-principal');
+            conteudo.innerHTML='<div class="loading-container"><div class="spinner"></div><p class="loading-text">Carregando dados...</p></div>';
+            try{
+                var dados=await buscarDadosJSONP();
                 aplicarConfig(dados.config);
-
-                // Renderiza navegação
                 renderizarNavegacao(dados.secoes);
-
-                // Monta o HTML de cada seção
-                var htmlPagina = '';
-
-                dados.secoes.forEach(function(secao) {
-                    var ordem = secao.ordem;
-                    var titulo = secao.titulo_secao;
-                    var descricao = secao.descricao;
-
-                    htmlPagina += '<section class="secao" id="secao-' + ordem + '">';
-                    htmlPagina += '<div class="secao-header">';
-                    htmlPagina += '<h2 class="secao-titulo">' + titulo + '</h2>';
-                    htmlPagina += '<p class="secao-descricao">' + descricao + '</p>';
-                    htmlPagina += '</div>';
-
-                    switch (titulo) {
-                        case 'Telas de trabalho':
-                            htmlPagina += renderizarTelasDeTrabalho(dados.telas_de_trabalho);
-                            break;
-                        case 'Glossário':
-                            htmlPagina += renderizarGlossario(dados.glossario);
-                            break;
-                        case 'Dúvidas Frequentes':
-                            htmlPagina += renderizarDuvidas(dados.duvidas_frequentes);
-                            break;
-                        case 'Contatos':
-                            htmlPagina += renderizarContatos();
-                            break;
-                        default:
-                            htmlPagina += '<p style="color:#999;">Conteúdo em construção...</p>';
-                    }
-
-                    htmlPagina += '</section>';
-
-                    if (parseInt(ordem) < dados.secoes.length) {
-                        htmlPagina += '<div class="divisor-logo"><img src="https://logopng.com.br/logo/mercado-livre-88" alt="ML" style="width:25px;border-radius:4px;"></div>';
-                    }
+                var html='';
+                dados.secoes.forEach(function(secao){
+                    var ordem=secao.ordem;var titulo=secao.titulo_secao;var desc=secao.descricao;
+                    html+='<section class="secao" id="secao-'+ordem+'"><div class="secao-header"><h2 class="secao-titulo">'+titulo+'</h2><p class="secao-descricao">'+desc+'</p></div>';
+                    if(titulo==='Telas de trabalho')html+=renderizarTelasDeTrabalho(dados.telas_de_trabalho);
+                    else if(titulo==='Glossário')html+=renderizarGlossario(dados.glossario);
+                    else if(titulo==='Dúvidas Frequentes')html+=renderizarDuvidas(dados.duvidas_frequentes);
+                    else if(titulo==='Contatos')html+=renderizarContatos();
+                    else html+='<p style="color:#999;">Em construção...</p>';
+                    html+='</section>';
+                    if(parseInt(ordem)<dados.secoes.length)html+='<div class="divisor-logo"><img src="https://logopng.com.br/logo/mercado-livre-88" alt="ML" style="width:25px;border-radius:4px;"></div>';
                 });
-
-                conteudo.innerHTML = htmlPagina;
-                iniciarObservador();
-                configurarNavAtiva();
-
-                var agora = new Date();
-                document.getElementById('ultima-atualizacao').textContent =
-                    'Última atualização: ' + agora.toLocaleString('pt-BR');
-
-            } catch (erro) {
-                console.error('Erro ao carregar página:', erro);
-                conteudo.innerHTML = '<div class="erro-container"><div class="erro-icone">⚠️</div><p class="erro-texto">Não foi possível carregar os dados.</p><p class="erro-texto" style="font-size:0.8rem;margin-top:5px;">Verifique se você está logado na conta @mercadolibre.com</p><button class="btn-tentar-novamente" onclick="carregarPagina()">Tentar novamente</button></div>';
+                conteudo.innerHTML=html;
+                iniciarObservador();configurarNavAtiva();
+                document.getElementById('ultima-atualizacao').textContent='Última atualização: '+new Date().toLocaleString('pt-BR');
+            }catch(erro){
+                console.error('Erro:',erro);
+                conteudo.innerHTML='<div class="erro-container"><div style="font-size:2.5rem;margin-bottom:10px">⚠️</div><p style="font-size:.95rem;color:#666">Não foi possível carregar os dados.</p><p style="font-size:.8rem;color:#666;margin-top:5px">Verifique se você está logado na conta @mercadolibre.com</p><button class="btn-tentar-novamente" onclick="carregarPagina()">Tentar novamente</button></div>';
             }
         }
 
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
-
-        document.addEventListener('DOMContentLoaded', function() {
-            carregarPagina();
-            configurarBotaoTopo();
-            setInterval(carregarPagina, INTERVALO_ATUALIZACAO);
-        });
+        document.addEventListener('DOMContentLoaded',function(){carregarPagina();configurarBotaoTopo();setInterval(carregarPagina,INTERVALO_ATUALIZACAO)});
     </script>
-
 </body>
 </html>

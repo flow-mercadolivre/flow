@@ -94,7 +94,7 @@
 <body>
     <div class="pagina">
         <header class="header" id="topo">
-            <img id="header-logo" class="header-logo" src="https://cdn.worldvectorlogo.com/logos/mercado-livre.svg" alt="Logo Mercado Livre">
+            <img id="header-logo" class="header-logo" src="https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_plus@2x.png" alt="Logo Mercado Livre">
             <h1 class="titulo-flow" id="titulo-principal">FLOW</h1>
             <p class="subtitulo" id="subtitulo-principal">Seu guia da area</p>
         </header>
@@ -155,8 +155,8 @@
             Object.keys(grupos).forEach(function(g){
                 html+='<div class="grupo-secao" data-grupo="'+g+'"><h3 class="grupo-titulo">'+getEmojiSecao(g)+' '+g+'</h3>';
                 Object.keys(grupos[g]).forEach(function(sub){
-                    html+='<p class="sub-grupo-titulo">'+ICONES_SUBSECAO[sub]||'🔗';
-                    html+=' '+sub+'</p><div class="cards-grid">';
+                    var icone=ICONES_SUBSECAO[sub]||ICONES_SUBSECAO['default'];
+                    html+='<p class="sub-grupo-titulo">'+icone+' '+sub+'</p><div class="cards-grid">';
                     grupos[g][sub].forEach(function(item){
                         var ic=ICONES_SUBSECAO[item.sub_secao]||ICONES_SUBSECAO['default'];
                         var dom=extrairDominio(item.url);var tit=item.titulo||'Sem título';
@@ -175,7 +175,6 @@
         function renderizarGlossario(dados){
             var grupos={};
             dados.forEach(function(item){
-                // Tenta todos os nomes possíveis que o Sheets pode enviar
                 var visao=item['Visão']||item['Visao']||item['visao']||item['visão']||'Geral';
                 if(!grupos[visao])grupos[visao]=[];
                 grupos[visao].push(item);
@@ -184,7 +183,6 @@
             Object.keys(grupos).forEach(function(visao){
                 html+='<div class="grupo-visao" data-visao="'+visao+'"><div class="grupo-visao-titulo">'+visao+'</div>';
                 grupos[visao].forEach(function(item){
-                    // Debug: pega todas as chaves do item e tenta encontrar os campos
                     var keys=Object.keys(item);
                     var nom='';var con='';
                     keys.forEach(function(k){
@@ -192,10 +190,8 @@
                         if(kl.indexOf('nomenclatura')>-1||kl.indexOf('nomen')>-1)nom=item[k];
                         if(kl.indexOf('conceito')>-1||kl.indexOf('detalhado')>-1)con=item[k];
                     });
-                    // Fallback: se não encontrou, usa a 3a e 4a coluna
                     if(!nom&&keys.length>=3)nom=item[keys[2]]||'';
                     if(!con&&keys.length>=4)con=item[keys[3]]||'';
-
                     html+='<div class="acordeao-item" data-termo="'+(nom+' '+con).toLowerCase().replace(/"/g,'&quot;')+'"><div class="acordeao-header" onclick="toggleAcordeao(this)"><span class="acordeao-titulo">'+nom+'</span><span class="acordeao-seta">▼</span></div><div class="acordeao-conteudo"><p class="acordeao-texto">'+con+'</p></div></div>';
                 });
                 html+='</div>';
@@ -203,7 +199,6 @@
             html+='</div><p class="sem-resultados" id="sem-resultados-glossario">Nenhum termo encontrado 😕</p>';
             return html;
         }
-
         function renderizarDuvidas(dados){
             var grupos={};
             dados.forEach(function(item){var sec=item.secao||'Geral';if(!grupos[sec])grupos[sec]=[];grupos[sec].push(item)});
@@ -286,7 +281,6 @@
             try{
                 var dados=await buscarDadosJSONP();
 
-                // Debug: mostra as chaves do primeiro item do glossário no console
                 if(dados.glossario&&dados.glossario.length>0){
                     console.log('GLOSSARIO - Chaves do 1o item:', Object.keys(dados.glossario[0]));
                     console.log('GLOSSARIO - 1o item completo:', JSON.stringify(dados.glossario[0]));

@@ -140,7 +140,7 @@
             config.forEach(function(item){var k=Object.keys(item);if(k.length>=2){m[item[k[0]]]=item[k[1]]}});
             if(m.titulo){document.getElementById('titulo-principal').textContent=m.titulo.toUpperCase();document.title=m.titulo+' - Guia da Área'}
             if(m.subtitulo){document.getElementById('subtitulo-principal').textContent=m.subtitulo}
-            if(m.logo_url){LOGO_ML=m.logo_url;document.getElementById('header-logo').src=m.logo_url;document.getElementById('footer-logo').src=m.logo_url}
+            if(m.logo_url&&m.logo_url.trim()!==''){LOGO_ML=m.logo_url;document.getElementById('header-logo').src=m.logo_url;document.getElementById('footer-logo').src=m.logo_url}else{document.getElementById('header-logo').src='logo-meli.png';document.getElementById('footer-logo').src='logo-meli.png'}
         }
 
         function renderizarNavegacao(secoes){
